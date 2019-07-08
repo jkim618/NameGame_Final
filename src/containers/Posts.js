@@ -21,7 +21,7 @@ class Posts extends React.Component{
                 {/*<button onClick={()=>this.fetchPosts()}>hihi fetch</button>*/}
                 {/*{this.props.posts && this.props.posts.map(post => <div key={post.id}>
                     <img src={post.headshot.url} style={{width:"200px"}}/></div>)}*/} 
-                <button onClick = {()=>this.getPics()}>Start!</button>
+                <button onClick = {()=>this.getPics()}>Skip</button>
                 <br/>
                 {this.props.pics && <img src={this.props.pics.headshot.url} style={{height:"150px"}}/>} 
             </div>

@@ -3,6 +3,8 @@ export const NEW_POST = "NEW_POST"
 export const GET_PICS = "GET_PICS"
 export const SEARCH_NAME = "SEARCH_NAME"
 export const LOAD_IMAGE = "LOAD_IMAGE"
+export const INCREASE_COUNT = "INCREASE_COUNT"
+export const DECREASE_COUNT = "DECREASE_COUNT"
 
 //used in fetchposts - filtering images without url
 export const getApiData = (info) => {

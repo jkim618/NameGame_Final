@@ -13,9 +13,9 @@ class App extends React.Component{
     return(
       <div>
         <Provider store={store}>
-          <TodoApp/>
-          <Posts/>
+          {/* <TodoApp/> */}
           <Search/>
+          {/* <Posts/> */}
         </Provider>
        
       </div>

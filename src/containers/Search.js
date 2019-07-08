@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import {nameSearch,fetchPosts, loadImage} from '../actions/postActions'
+import {nameSearch,fetchPosts, loadImage, increaseCount, decreaseCount} from '../actions/postActions'
 import { thisExpression } from '@babel/types';
 import '../App.scss'
 
@@ -9,15 +9,14 @@ class Search extends React.Component{
         super();
         this.state={
             keyword:"",
-            //inputKeyword:"",
             mounted: false,
             result:false,
-            errorMsg:"",
-            count:0
-            //sg:""
+            errorMsg:""
         }
         //this.searchName=this.searchName.bind(this);
         this.getMorePics=this.getMorePics.bind(this);
+        this.onClickCount = this.onClickCount.bind(this);
+        this.decreaseCount = this.decreaseCount.bind(this);
     }
 
     searchName = (e) => {
@@ -32,12 +31,15 @@ class Search extends React.Component{
                 keyword: "",
                 count:this.state.count-1
             })
+            this.decreaseCount();
         }
         if(result===true){
             this.setState({
                 count:this.state.count + 1,
-                errorMsg: "Correct!"
+                errorMsg: "Correct!",
+                //newcount:this.props.increaseCount
             })
+            this.onClickCount();
         }
     }
 
@@ -60,11 +62,33 @@ class Search extends React.Component{
             keyword:''})
     }
 
+    skip(){
+        this.props.fetchPosts();
+    }
+
+
+    onClickCount() {
+        let currentCount = this.props.count;
+        currentCount = currentCount + 1;
+        this.props.increaseCount(currentCount)
+    }
+
+    decreaseCount() {
+        let currentCount= this.props.count;
+        currentCount--;
+        this.props.decreaseCount(currentCount)
+    }
+
     render(){
-        console.log("outputting props", this.props.img)
         return(
             <div>
-                <form onSubmit={this.searchName}>
+                <div class="description">
+                    <h1>Name Game</h1>
+                    <p>Instruction: Guess your coworkers' names! If you guess right, your score will increase by one.
+                        If you guess wrong, your score will decrease. 
+                    </p>
+                </div>
+                <form class="search" onSubmit={this.searchName}>
                    { this.props.img && <img src={this.props.img.headshot.url} style={{width:"150px"}}/>}
                     <h3>Search Name: </h3>
                     <input type="text" value={this.state.keyword}
@@ -77,15 +101,23 @@ class Search extends React.Component{
                         </div> }
                     */}
                     <br/>
-                    {this.state.errorMsg}
-                    {this.state.errorMsg === "Correct!" ? 
-                        <div>
-                            <button onClick={this.getMorePics}>next</button>
-                        </div> 
-                        : null}
+                    <div class="error">
+                        <p>{this.state.errorMsg}</p>
+                        {this.state.errorMsg === "Correct!" ? 
+                            <div>
+                                <button onClick={this.getMorePics}>next</button>
+                            </div> 
+                            : null}
+                    </div>
                 </form>
-                <div>
-                Your current score: {this.state.count}
+                <div class="score">
+                    Your current score: {this.props.count}
+                </div>
+                <div class="congrats">
+                    {this.state.count==5?<p>Congrats!</p>:null}
+                    {/* <button onClick={this.onClickCount}>Increase Count</button>
+                    <p style={{color:"white"}}>{this.props.count}</p>
+                    <button onClick={this.decreaseCount}>Decrease Count</button> */}
                 </div>
             </div>
         )
@@ -93,12 +125,13 @@ class Search extends React.Component{
 }
 
 function mapStateToProps(state){
-    //console.log(state.posts.items)
+    console.log(state.img)
     return{
-        names: state.posts.names,
-        img: state.posts.img,
-        images: state.posts.items
+        names: state.names,
+        img: state.img,
+        images: state.items,
+        count: state.count
     }
 }
 
-export default connect(mapStateToProps,{nameSearch,fetchPosts,loadImage})(Search);
+export default connect(mapStateToProps,{nameSearch,fetchPosts,loadImage, increaseCount, decreaseCount})(Search);

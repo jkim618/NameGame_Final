@@ -1,0 +1,63 @@
+@import 'variables.scss';
+
+body{
+    text-align:center;
+    background-color:#1f2833;
+}
+
+.description{
+    padding-top:20px;
+    padding-bottom:10px;
+    color:$neonBlue;
+    font-family: $roboto;
+    max-width:100vh;
+    margin: 0 auto;
+    p{
+        color:$gray;
+    }
+}
+
+.search{
+    background-color:#0b0c10;
+    max-width:90vh;
+    color:$gray;
+    margin: 0 auto;
+    padding-top:40px;
+    padding-bottom:40px;
+
+    button{
+        background-color: #1f2833; /* Green */
+        border: $neonBlue 1px solid;
+        color: $neonBlue;
+        padding: 5px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+    }
+} 
+
+.score{
+    // border:3px solid pink;
+    color:$gray;
+    margin-top:30px;
+    font-family:$arimo;
+}
+
+input[type=text] {
+    padding:5px;
+    border: none;
+    background-color:#0b0c10;
+    margin-right:10px;
+    color:$gray;
+    border-bottom: 2px solid $neonBlue;
+    font-size:14px;
+}
+
+.error{
+    padding: 0;
+    p{
+        margin: 0 auto;
+        margin-top:30px;
+    }
+}
