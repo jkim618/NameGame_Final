@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import {nameSearch,fetchPosts} from '../actions/postActions'
-
+import {nameSearch,fetchPosts, loadImage} from '../actions/postActions'
+import { thisExpression } from '@babel/types';
+import '../App.scss'
 
 class Search extends React.Component{
     constructor(props){
@@ -9,64 +10,95 @@ class Search extends React.Component{
         this.state={
             keyword:"",
             //inputKeyword:"",
-            clicked:false,
-            result:false
+            mounted: false,
+            result:false,
+            errorMsg:"",
+            count:0
+            //sg:""
         }
         //this.searchName=this.searchName.bind(this);
-        //this.getMorePics=this.getMorePics.bind(this);
+        this.getMorePics=this.getMorePics.bind(this);
     }
 
-    searchName = (keyword) => {
-        keyword.preventDefault();
-        this.props.nameSearch(keyword)
-        let result = this.props.pics&&
-            this.props.pics.firstName.toLowerCase()==this.state.keyword.toLowerCase();
-        if (result==false){
-            console.log('false')
+    searchName = (e) => {
+        e.preventDefault();
+        //console.log(this.props.img.firstName)
+        //this.props.nameSearch(keyword) no
+        let result = this.props.img&&
+            this.props.img.firstName.toLowerCase()==this.state.keyword.toLowerCase();
+        if (result===false){
+            this.setState({
+                errorMsg: "Incorrect! Try again!",
+                keyword: "",
+                count:this.state.count-1
+            })
         }
-        this.setState({
-            result:result
-        })
-       
-        /*this.setState({
-            clicked:true
-        })*/
-
+        if(result===true){
+            this.setState({
+                count:this.state.count + 1,
+                errorMsg: "Correct!"
+            })
+        }
     }
 
-    getMorePics = () =>{
-        console.log("get more pics",this.props.pics.firstName)
+    componentDidMount(){
+       // console.log("get more pics",this.props.pics.firstName)
         this.props.fetchPosts();
         this.setState({
-            keyword:''
-            //clicked:!this.state.clicked
+            keyword:'',
+            nextClicked: !this.state.nextClicked,
+            mounted: true
         })
+    }
+
+    getMorePics(){
+        let randomIndex = Math.floor(Math.random()*167)
+        let randomImg = this.props.images[randomIndex]
+        this.props.loadImage(randomImg)
+        this.setState({
+            errorMsg: '',
+            keyword:''})
     }
 
     render(){
-        console.log("outputting props", this.props.pics)
+        console.log("outputting props", this.props.img)
         return(
             <div>
                 <form onSubmit={this.searchName}>
-                    Search Name: <input type="text" value={this.state.keyword}
+                   { this.props.img && <img src={this.props.img.headshot.url} style={{width:"150px"}}/>}
+                    <h3>Search Name: </h3>
+                    <input type="text" value={this.state.keyword}
                         onChange={(e)=>this.setState({keyword:e.target.value})}></input>
                     <button type="submit">Search</button>
-                    {/* <button type="idk">Hi</button> */}
-                    {this.state.result&&
+                    {/* {this.state.result&&
                         <div>
                             <p>Correct! Click Next for more!</p>
                             <button onClick={()=>this.getMorePics()}>Next!</button>
                         </div> }
+                    */}
+                    <br/>
+                    {this.state.errorMsg}
+                    {this.state.errorMsg === "Correct!" ? 
+                        <div>
+                            <button onClick={this.getMorePics}>next</button>
+                        </div> 
+                        : null}
                 </form>
+                <div>
+                Your current score: {this.state.count}
+                </div>
             </div>
         )
     }
 }
+
 function mapStateToProps(state){
+    //console.log(state.posts.items)
     return{
-        names:state.posts.names,
-        pics:state.posts.pics
+        names: state.posts.names,
+        img: state.posts.img,
+        images: state.posts.items
     }
 }
 
-export default connect(mapStateToProps,{nameSearch,fetchPosts})(Search);
+export default connect(mapStateToProps,{nameSearch,fetchPosts,loadImage})(Search);

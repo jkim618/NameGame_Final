@@ -6,6 +6,7 @@ import store from './store'
 import {Provider} from 'react-redux'
 import Posts from './containers/Posts'
 import Search from './containers/Search'
+import Congrats from './containers/Congrats'
 
 class App extends React.Component{
   render(){

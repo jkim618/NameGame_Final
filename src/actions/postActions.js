@@ -1,4 +1,4 @@
-import {FETCH_POSTS, NEW_POST, GET_PICS, SEARCH_NAME, getApiData} from './types'
+import {FETCH_POSTS, NEW_POST, GET_PICS, SEARCH_NAME, getApiData, LOAD_IMAGE} from './types'
 import Axios from 'axios'
 
 export const fetchPosts = () => dispatch => { 
@@ -6,13 +6,15 @@ export const fetchPosts = () => dispatch => {
         .then(res => res.json())
         .then(posts => {
             dispatch(getApiData(posts))
-            let randomIndex = Math.floor(Math.random()*167)
-            dispatch(
-                {
-                type:GET_PICS,
-                payload: posts[randomIndex]
-            })
+            let randImg = getOnePic(posts);
+            dispatch(loadImage(randImg));
         })
+}
+
+export const getOnePic = (posts) => {
+    let randomIndex = Math.floor(Math.random()*167)
+    let randomImg = posts[randomIndex]
+    return randomImg
 }
 
 export const nameSearch = (name) => {
@@ -34,4 +36,12 @@ export const getPics = () => {
             type:GET_PICS,
             payload:thePic
         }
+}
+
+export const loadImage = (image) => {
+    console.log('loadimg function')
+    return {
+        type: LOAD_IMAGE,
+        payload: image
+    }
 }

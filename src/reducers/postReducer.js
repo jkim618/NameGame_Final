@@ -1,10 +1,11 @@
-import {FETCH_POSTS, NEW_POST, GET_PICS, SEARCH_NAME} from '../actions/types'
+import {FETCH_POSTS, NEW_POST, GET_PICS, SEARCH_NAME, LOAD_IMAGE} from '../actions/types'
 
 const initialState = {
     items:[], //posts that come in from our action, the fetch request
     item:{}, //single post that we add when we get response back
     pics:[],
-    names:""
+    names:"",
+    img:""
 }
 
 export default function (state = initialState, action){
@@ -28,7 +29,11 @@ export default function (state = initialState, action){
                 ...state,
                 names:action.payload
             }
-
+        case LOAD_IMAGE:
+            return{
+                ...state,
+                img: action.payload
+            }
         default:
             return{
                 state

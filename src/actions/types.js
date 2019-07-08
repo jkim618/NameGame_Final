@@ -2,8 +2,11 @@ export const FETCH_POSTS = "FETCH_POSTS"
 export const NEW_POST = "NEW_POST"
 export const GET_PICS = "GET_PICS"
 export const SEARCH_NAME = "SEARCH_NAME"
+export const LOAD_IMAGE = "LOAD_IMAGE"
 
+//used in fetchposts - filtering images without url
 export const getApiData = (info) => {
+    console.log("get api data")
     let newArray=[];
     info.forEach((x)=>{
         if(x.headshot.url!=null){

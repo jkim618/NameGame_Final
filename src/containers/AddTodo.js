@@ -25,6 +25,4 @@ class AddTodo extends React.Component{
     }
 }
 
-
-
 export default connect()(AddTodo);
