@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import {nameSearch,fetchPosts, loadImage, increaseCount, decreaseCount} from '../actions/postActions'
+import {nameSearch,fetchPosts, loadImage, increaseCount, decreaseCount, hint} from '../actions/postActions'
 import { thisExpression } from '@babel/types';
 import '../App.scss'
 
@@ -11,12 +11,15 @@ class Search extends React.Component{
             keyword:"",
             mounted: false,
             result:false,
-            errorMsg:""
+            errorMsg:"",
+            hint:"",
+            hintMessage:""
         }
         //this.searchName=this.searchName.bind(this);
         this.getMorePics=this.getMorePics.bind(this);
-        this.onClickCount = this.onClickCount.bind(this);
+        this.increment = this.increment.bind(this);
         this.decreaseCount = this.decreaseCount.bind(this);
+        this.getHint=this.getHint.bind(this);
     }
 
     searchName = (e) => {
@@ -37,9 +40,10 @@ class Search extends React.Component{
             this.setState({
                 count:this.state.count + 1,
                 errorMsg: "Correct!",
-                //newcount:this.props.increaseCount
+                hint:"",
+                hintMessage:""
             })
-            this.onClickCount();
+            this.increment();
         }
     }
 
@@ -61,13 +65,17 @@ class Search extends React.Component{
             errorMsg: '',
             keyword:''})
     }
-
-    skip(){
-        this.props.fetchPosts();
+    getHint(e){
+        e.preventDefault();
+        //this.props.hint();
+        console.log(this.props.img.firstName[0])
+        this.setState({
+            hint:this.props.img.firstName[0],
+            hintMessage:"The name starts with: "
+        })
     }
 
-
-    onClickCount() {
+    increment() {
         let currentCount = this.props.count;
         currentCount = currentCount + 1;
         this.props.increaseCount(currentCount)
@@ -80,6 +88,7 @@ class Search extends React.Component{
     }
 
     render(){
+        //console.log(this.props.img.firstName[0])
         return(
             <div>
                 <div class="description">
@@ -88,24 +97,25 @@ class Search extends React.Component{
                         If you guess wrong, your score will decrease. 
                     </p>
                 </div>
-                <form class="search" onSubmit={this.searchName}>
+                <form class="search" >
                    { this.props.img && <img src={this.props.img.headshot.url} style={{width:"150px"}}/>}
                     <h3>Search Name: </h3>
                     <input type="text" value={this.state.keyword}
                         onChange={(e)=>this.setState({keyword:e.target.value})}></input>
-                    <button type="submit">Search</button>
-                    {/* {this.state.result&&
-                        <div>
-                            <p>Correct! Click Next for more!</p>
-                            <button onClick={()=>this.getMorePics()}>Next!</button>
-                        </div> }
-                    */}
+                    <button type="submit" onClick={this.searchName}>Search</button>
                     <br/>
                     <div class="error">
-                        <p>{this.state.errorMsg}</p>
+                        {this.state.errorMsg== "Incorrect! Try again!" ?
+                            <div>
+                                <p>Try again!</p>
+                                <button onClick={this.getHint}>Need a hint?</button>
+                                <br/>
+                                {this.getHint && <p>{this.state.hintMessage}{this.state.hint}</p>}
+                                
+                            </div> : null}
                         {this.state.errorMsg === "Correct!" ? 
                             <div>
-                                <button onClick={this.getMorePics}>next</button>
+                                Correct! Click next to continue! <button onClick={this.getMorePics}>next</button>
                             </div> 
                             : null}
                     </div>
@@ -114,11 +124,31 @@ class Search extends React.Component{
                     Your current score: {this.props.count}
                 </div>
                 <div class="congrats">
-                    {this.state.count==5?<p>Congrats!</p>:null}
+                    {/* {this.props.count==5? */}
+                    <div class="confetti">
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="icon">CONGRATS! </div> 
+                    <br/>
+                    <div class="challenge"><p>Want a Challenge?</p><button>Go to Challenge</button></div>
+                </div>
+                {/* :null} */}
                     {/* <button onClick={this.onClickCount}>Increase Count</button>
                     <p style={{color:"white"}}>{this.props.count}</p>
                     <button onClick={this.decreaseCount}>Decrease Count</button> */}
                 </div>
+                
             </div>
         )
     }
@@ -134,4 +164,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps,{nameSearch,fetchPosts,loadImage, increaseCount, decreaseCount})(Search);
+export default connect(mapStateToProps,{nameSearch,fetchPosts,loadImage, increaseCount, decreaseCount, hint})(Search);

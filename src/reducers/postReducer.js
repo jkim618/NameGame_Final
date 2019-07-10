@@ -1,4 +1,4 @@
-import {FETCH_POSTS, NEW_POST, GET_PICS, SEARCH_NAME, LOAD_IMAGE, INCREASE_COUNT, DECREASE_COUNT} from '../actions/types'
+import {FETCH_POSTS, NEW_POST, GET_PICS, SEARCH_NAME, LOAD_IMAGE, INCREASE_COUNT, DECREASE_COUNT, GET_HINT} from '../actions/types'
 
 const initialState = {
     items:[], //posts that come in from our action, the fetch request
@@ -22,6 +22,8 @@ export default function (state = initialState, action){
                 ...state,
                 count: action.payload
             }
+        case GET_HINT:
+            console.log('getting hint reducer')
 
         case FETCH_POSTS:
             // console.log('r u', action)
