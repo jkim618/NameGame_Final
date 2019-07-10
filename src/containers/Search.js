@@ -141,7 +141,7 @@ class Search extends React.Component{
                     <div class="confetti-piece"></div>
                     <div class="icon">CONGRATS! </div> 
                     <br/>
-                    <div class="challenge"><p>Want a Challenge?</p><button>Go to Challenge</button></div>
+                    <div class="challenge"><p></p>Want a Challenge?<button>Go to Challenge</button></div>
                 </div>
                 {/* :null} */}
                     {/* <button onClick={this.onClickCount}>Increase Count</button>

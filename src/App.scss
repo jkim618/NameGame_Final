@@ -66,7 +66,10 @@ input[type=text] {
 .congrats{
     color:$gray;
     font-size:30px;
-    p{
+    min-height:100px;
+    p{  
+        padding-top:30px;
+        border: 3px solid red;
         padding:0;
         margin:0;
     }
