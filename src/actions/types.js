@@ -5,20 +5,27 @@ export const SEARCH_NAME = "SEARCH_NAME"
 export const LOAD_IMAGE = "LOAD_IMAGE"
 export const INCREASE_COUNT = "INCREASE_COUNT"
 export const DECREASE_COUNT = "DECREASE_COUNT"
-export const GET_HINT = "GET_HINT"
+export const GET_MATTHEW = "GET_MATTHEW"
+export const LOAD_MATTHEW_IMAGE = "LOAD_MATTHEW_IMAGE"
 
 //used in fetchposts - filtering images without url
 export const getApiData = (info) => {
-    console.log("get api data")
+    console.log("api data function")
     let newArray=[];
     info.forEach((x)=>{
         if(x.headshot.url!=null){
             newArray.push(x)
         }
     })
-    console.log("all the info", newArray)
     return {
         type: FETCH_POSTS, 
         payload: newArray
+    }
+}
+
+export const getMatthew = (matthew) => {
+    return{
+        type:GET_MATTHEW,
+        payload: matthew
     }
 }

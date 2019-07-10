@@ -69,7 +69,7 @@ input[type=text] {
     min-height:100px;
     p{  
         padding-top:30px;
-        border: 3px solid red;
+
         padding:0;
         margin:0;
     }
@@ -173,4 +173,8 @@ $duration: 1000;
   to {
     transform: translateY(200px);
   }
+}
+
+.challengepage{
+  color:white
 }

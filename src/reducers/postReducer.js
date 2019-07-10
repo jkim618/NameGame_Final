@@ -1,4 +1,5 @@
-import {FETCH_POSTS, NEW_POST, GET_PICS, SEARCH_NAME, LOAD_IMAGE, INCREASE_COUNT, DECREASE_COUNT, GET_HINT} from '../actions/types'
+import {FETCH_POSTS, NEW_POST, GET_PICS, SEARCH_NAME, LOAD_IMAGE, 
+        INCREASE_COUNT, DECREASE_COUNT, GET_MATTHEW, LOAD_MATTHEW_IMAGE} from '../actions/types'
 
 const initialState = {
     items:[], //posts that come in from our action, the fetch request
@@ -12,7 +13,6 @@ const initialState = {
 export default function (state = initialState, action){
     switch(action.type){
         case INCREASE_COUNT:
-
             return{
                 ...state,
                 count: action.payload
@@ -22,14 +22,17 @@ export default function (state = initialState, action){
                 ...state,
                 count: action.payload
             }
-        case GET_HINT:
-            console.log('getting hint reducer')
-
         case FETCH_POSTS:
             // console.log('r u', action)
             return{
                 ...state,
                 items: action.payload
+            }
+        case GET_MATTHEW:
+            console.log('getting matthew reducer',action.payload)
+            return{
+                ...state,
+                matthews: action.payload
             }
         
         case GET_PICS:
@@ -48,6 +51,11 @@ export default function (state = initialState, action){
             return{
                 ...state,
                 img: action.payload
+            }
+        case LOAD_MATTHEW_IMAGE:
+            return{
+                ...state,
+                matthewImg: action.payload
             }
         default:
             return state

@@ -1,7 +1,6 @@
 import React from 'react'
 import AddTodo from './containers/AddTodo'
 import VisibleTodos from './containers/VisibleTodos'
-import CallApi from './containers/CallApi'
 
 class TodoApp extends React.Component{
     state = {

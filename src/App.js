@@ -7,17 +7,21 @@ import {Provider} from 'react-redux'
 import Posts from './containers/Posts'
 import Search from './containers/Search'
 import Congrats from './containers/Congrats'
+import { BrowserRouter as Router, Switch, Route, Link,withRouter} from 'react-router-dom';
+import Challenge from './containers/Challenge'
 
 class App extends React.Component{
   render(){
     return(
       <div>
+        <Router>
         <Provider store={store}>
-          {/* <TodoApp/> */}
-          <Search/>
-          {/* <Posts/> */}
+          <Switch>
+            <Route exact path="/" component={Search}/>
+            <Route path="/challenge" component={Challenge}/>
+          </Switch>
         </Provider>
-       
+        </Router>
       </div>
     )
   }

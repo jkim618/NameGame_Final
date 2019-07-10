@@ -1,7 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import {nameSearch,fetchPosts, loadImage, increaseCount, decreaseCount, hint} from '../actions/postActions'
+import {nameSearch,fetchPosts, loadImage, increaseCount, decreaseCount} from '../actions/postActions'
 import { thisExpression } from '@babel/types';
+import { BrowserRouter as Router, Switch, Route, Link , withRouter} from 'react-router-dom';
+import Challenge from './Challenge'
 import '../App.scss'
 
 class Search extends React.Component{
@@ -65,6 +67,7 @@ class Search extends React.Component{
             errorMsg: '',
             keyword:''})
     }
+    
     getHint(e){
         e.preventDefault();
         //this.props.hint();
@@ -88,68 +91,72 @@ class Search extends React.Component{
     }
 
     render(){
-        //console.log(this.props.img.firstName[0])
+        console.log(this.props.img)
         return(
-            <div>
-                <div class="description">
-                    <h1>Name Game</h1>
-                    <p>Instruction: Guess your coworkers' names! If you guess right, your score will increase by one.
-                        If you guess wrong, your score will decrease. 
-                    </p>
-                </div>
-                <form class="search" >
-                   { this.props.img && <img src={this.props.img.headshot.url} style={{width:"150px"}}/>}
-                    <h3>Search Name: </h3>
-                    <input type="text" value={this.state.keyword}
-                        onChange={(e)=>this.setState({keyword:e.target.value})}></input>
-                    <button type="submit" onClick={this.searchName}>Search</button>
-                    <br/>
-                    <div class="error">
-                        {this.state.errorMsg== "Incorrect! Try again!" ?
-                            <div>
-                                <p>Try again!</p>
-                                <button onClick={this.getHint}>Need a hint?</button>
-                                <br/>
-                                {this.getHint && <p>{this.state.hintMessage}{this.state.hint}</p>}
-                                
-                            </div> : null}
-                        {this.state.errorMsg === "Correct!" ? 
-                            <div>
-                                Correct! Click next to continue! <button onClick={this.getMorePics}>next</button>
-                            </div> 
-                            : null}
+            <Router>
+                <div>
+                    <div class="description">
+                        <h1>Name Game</h1>
+                        <p>Instruction: Guess your coworkers' names! If you guess right, your score will increase by one.
+                            If you guess wrong, your score will decrease. 
+                        </p>
                     </div>
-                </form>
-                <div class="score">
-                    Your current score: {this.props.count}
+                    <form class="search" >
+                    { this.props.img && <img src={this.props.img.headshot.url} style={{width:"150px"}}/>}
+                        <h3>Search Name: </h3>
+                        <input type="text" value={this.state.keyword}
+                            onChange={(e)=>this.setState({keyword:e.target.value})}></input>
+                        <button type="submit" onClick={this.searchName}>Search</button>
+                        <br/>
+                        <div class="error">
+                            {this.state.errorMsg== "Incorrect! Try again!" ?
+                                <div>
+                                    <p>Try again!</p>
+                                    <button onClick={this.getHint}>Need a hint?</button>
+                                    <br/>
+                                    {this.getHint && <p>{this.state.hintMessage}{this.state.hint}</p>}
+                                    
+                                </div> : null}
+                            {this.state.errorMsg === "Correct!" ? 
+                                <div>
+                                    Correct! Click next to continue! <button onClick={this.getMorePics}>next</button>
+                                </div> 
+                                : null}
+                        </div>
+                    </form>
+                    <div class="score">
+                        Your current score: {this.props.count}
+                    </div>
+                    <div class="congrats">
+                        {this.props.count==5?
+                        <div class="confetti">
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="icon">CONGRATS! </div> 
+                        <br/>
+                        <div class="challenge"><p></p>Want a Challenge?
+                            <button><Link to='/challenge' onClick={()=>this.props.history.push('/challenge')}
+                                style={{ textDecoration: 'none', color: '#66fcf1' }}>Go to Challenge</Link></button></div>
+                    </div>
+                    :null} 
+                        {/* <button onClick={this.onClickCount}>Increase Count</button>
+                        <p style={{color:"white"}}>{this.props.count}</p>
+                        <button onClick={this.decreaseCount}>Decrease Count</button> */}
+                    </div>
                 </div>
-                <div class="congrats">
-                    {/* {this.props.count==5? */}
-                    <div class="confetti">
-                    <div class="confetti-piece"></div>
-                    <div class="confetti-piece"></div>
-                    <div class="confetti-piece"></div>
-                    <div class="confetti-piece"></div>
-                    <div class="confetti-piece"></div>
-                    <div class="confetti-piece"></div>
-                    <div class="confetti-piece"></div>
-                    <div class="confetti-piece"></div>
-                    <div class="confetti-piece"></div>
-                    <div class="confetti-piece"></div>
-                    <div class="confetti-piece"></div>
-                    <div class="confetti-piece"></div>
-                    <div class="confetti-piece"></div>
-                    <div class="icon">CONGRATS! </div> 
-                    <br/>
-                    <div class="challenge"><p></p>Want a Challenge?<button>Go to Challenge</button></div>
-                </div>
-                {/* :null} */}
-                    {/* <button onClick={this.onClickCount}>Increase Count</button>
-                    <p style={{color:"white"}}>{this.props.count}</p>
-                    <button onClick={this.decreaseCount}>Decrease Count</button> */}
-                </div>
-                
-            </div>
+            </Router>
+
         )
     }
 }
@@ -164,4 +171,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps,{nameSearch,fetchPosts,loadImage, increaseCount, decreaseCount, hint})(Search);
+export default withRouter(connect(mapStateToProps,{nameSearch,fetchPosts,loadImage, increaseCount, decreaseCount})(Search));
