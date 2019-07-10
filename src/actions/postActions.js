@@ -1,4 +1,4 @@
-import {FETCH_POSTS, NEW_POST, GET_PICS, SEARCH_NAME, getApiData, LOAD_IMAGE, INCREASE_COUNT, DECREASE_COUNT} from './types'
+import {FETCH_POSTS, NEW_POST, GET_PICS, SEARCH_NAME, getApiData, LOAD_IMAGE, INCREASE_COUNT, DECREASE_COUNT, GET_HINT} from './types'
 import Axios from 'axios'
 
 export const fetchPosts = () => dispatch => { 
@@ -21,6 +21,12 @@ export const nameSearch = (name) => {
     return{
         type:SEARCH_NAME,
         payload:name
+    }
+}
+
+export const hint = () => {
+    return{
+        type:GET_HINT
     }
 }
 
