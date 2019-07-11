@@ -162,7 +162,7 @@ class Search extends React.Component{
 }
 
 function mapStateToProps(state){
-    console.log(state.img)
+    console.log(state.items)
     return{
         names: state.names,
         img: state.img,

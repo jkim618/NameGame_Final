@@ -23,13 +23,14 @@ export const fetchPosts = () => dispatch => {
         })
 }
 
-
+// getting one random pic based on random index
 export const getOnePic = (posts) => {
     let randomIndex = Math.floor(Math.random()*167)
     let randomImg = posts[randomIndex]
     return randomImg
 }
 
+//getting one random matthew pic based on random
 export const getOneMatthewPic = (posts) => {
     let randomIndex = Math.floor(Math.random()*11)
     let randomImg = posts[randomIndex]
@@ -77,6 +78,7 @@ export const loadImage = (image) => {
 }
 
 export const loadMatthewImage = (image) => {
+    console.log('load matthew Img function')
     return {
         type: LOAD_MATTHEW_IMAGE,
         payload: image
